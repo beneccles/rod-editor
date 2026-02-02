@@ -6,6 +6,22 @@
 	objectVersion = 56;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		SE6000001 /* SpeakEasyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000001 /* SpeakEasyApp.swift */; };
+		SE6000002 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000003 /* AppSettings.swift */; };
+		SE6000003 /* TextVariation.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000004 /* TextVariation.swift */; };
+		SE6000004 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000005 /* StorageService.swift */; };
+		SE6000005 /* SpeechService.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000006 /* SpeechService.swift */; };
+		SE6000006 /* TextCorrectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000007 /* TextCorrectionService.swift */; };
+		SE6000007 /* AccessibleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000008 /* AccessibleButton.swift */; };
+		SE6000008 /* EditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000009 /* EditorView.swift */; };
+		SE6000009 /* VariationModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000010 /* VariationModalView.swift */; };
+		SE6000010 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000011 /* SettingsView.swift */; };
+		SE6000011 /* EditorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000012 /* EditorViewModel.swift */; };
+		SE6000012 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = SE0000013 /* SettingsViewModel.swift */; };
+		SE6000013 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = SE0000014 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		SE0000001 /* SpeakEasyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakEasyApp.swift; sourceTree = "<group>"; };
 		SE0000002 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -118,6 +134,7 @@
 			buildConfigurationList = SE3000001 /* Build configuration list for PBXNativeTarget "SpeakEasy" */;
 			buildPhases = (
 				SE2000002 /* Sources */,
+				SE2000003 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -166,10 +183,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				SE6000001 /* SpeakEasyApp.swift in Sources */,
+				SE6000002 /* AppSettings.swift in Sources */,
+				SE6000003 /* TextVariation.swift in Sources */,
+				SE6000004 /* StorageService.swift in Sources */,
+				SE6000005 /* SpeechService.swift in Sources */,
+				SE6000006 /* TextCorrectionService.swift in Sources */,
+				SE6000007 /* AccessibleButton.swift in Sources */,
+				SE6000008 /* EditorView.swift in Sources */,
+				SE6000009 /* VariationModalView.swift in Sources */,
+				SE6000010 /* SettingsView.swift in Sources */,
+				SE6000011 /* EditorViewModel.swift in Sources */,
+				SE6000012 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXResourcesBuildPhase section */
+		SE2000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				SE6000013 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
 		SE5000001 /* Debug */ = {

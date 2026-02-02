@@ -19,19 +19,19 @@ class EditorViewModel: ObservableObject {
     private let storageService: StorageService
     private let textCorrectionService: TextCorrectionService
     private let speechService: SpeechService
+    private let settingsManager: SettingsManager
     private var autoSaveTask: Task<Void, Never>?
-    private var settings: AppSettings
 
     init(
         storageService: StorageService,
         textCorrectionService: TextCorrectionService,
         speechService: SpeechService,
-        settings: AppSettings
+        settingsManager: SettingsManager
     ) {
         self.storageService = storageService
         self.textCorrectionService = textCorrectionService
         self.speechService = speechService
-        self.settings = settings
+        self.settingsManager = settingsManager
 
         // Load saved draft
         self.currentText = storageService.loadDraft()
@@ -95,14 +95,10 @@ class EditorViewModel: ObservableObject {
         } else {
             speechService.speak(
                 text: currentText,
-                voiceId: settings.selectedVoiceId,
-                rate: settings.speechRate
+                voiceId: settingsManager.settings.selectedVoiceId,
+                rate: settingsManager.settings.speechRate
             )
         }
-    }
-
-    func updateSettings(_ newSettings: AppSettings) {
-        settings = newSettings
     }
 
     // MARK: - Auto-save

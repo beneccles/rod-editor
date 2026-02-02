@@ -24,6 +24,10 @@ class SpeechService: NSObject, ObservableObject {
     }
 
     /// Speak the given text with the specified settings
+    /// - Parameters:
+    ///   - text: The text to speak
+    ///   - voiceId: Optional voice identifier
+    ///   - rate: User-facing speech rate (0.5 = slow, 1.0 = normal, 2.0 = fast)
     func speak(text: String, voiceId: String?, rate: Float) {
         // Stop any current speech
         if synthesizer.isSpeaking {
@@ -33,7 +37,13 @@ class SpeechService: NSObject, ObservableObject {
         guard !text.isEmpty else { return }
 
         let utterance = AVSpeechUtterance(string: text)
-        utterance.rate = rate
+
+        // Map user-friendly rate (0.5-2.0) to AVSpeechUtterance rate (0.0-1.0)
+        // User 0.5x → 0.25 (slow)
+        // User 1.0x → 0.45 (natural conversation, slower than default)
+        // User 2.0x → 0.75 (fast but not maximum)
+        // Linear mapping: rate * 0.45
+        utterance.rate = rate * 0.45
 
         // Set voice if specified
         if let voiceId = voiceId,

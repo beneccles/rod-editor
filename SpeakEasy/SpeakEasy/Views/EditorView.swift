@@ -3,21 +3,26 @@ import SwiftUI
 /// Main editor screen with text input and action buttons
 struct EditorView: View {
     @StateObject private var viewModel: EditorViewModel
+    @ObservedObject var settingsManager: SettingsManager
     @State private var showingSettings = false
-    let settings: AppSettings
+
+    let storageService: StorageService
+    let speechService: SpeechService
 
     init(
         storageService: StorageService,
         textCorrectionService: TextCorrectionService,
         speechService: SpeechService,
-        settings: AppSettings
+        settingsManager: SettingsManager
     ) {
-        self.settings = settings
+        self.storageService = storageService
+        self.speechService = speechService
+        self.settingsManager = settingsManager
         self._viewModel = StateObject(wrappedValue: EditorViewModel(
             storageService: storageService,
             textCorrectionService: textCorrectionService,
             speechService: speechService,
-            settings: settings
+            settingsManager: settingsManager
         ))
     }
 
@@ -45,7 +50,7 @@ struct EditorView: View {
 
             // Text Editor
             TextEditor(text: $viewModel.currentText)
-                .font(.system(size: settings.fontSize))
+                .font(.system(size: settingsManager.settings.fontSize))
                 .padding()
                 .scrollContentBackground(.hidden)
                 .background(Color(.systemBackground))
@@ -88,9 +93,9 @@ struct EditorView: View {
         }
         .sheet(isPresented: $showingSettings) {
             SettingsView(
-                storageService: StorageService(),
-                speechService: SpeechService(),
-                initialSettings: settings
+                storageService: storageService,
+                speechService: speechService,
+                settingsManager: settingsManager
             )
         }
         .sheet(isPresented: $viewModel.showingVariationModal) {
@@ -107,6 +112,6 @@ struct EditorView: View {
             Button("Keep Writing", role: .cancel) {}
             Button("Clear", role: .destructive, action: viewModel.clearText)
         }
-        .preferredColorScheme(settings.colorScheme.uiColorScheme)
+        .preferredColorScheme(settingsManager.settings.colorScheme.uiColorScheme)
     }
 }

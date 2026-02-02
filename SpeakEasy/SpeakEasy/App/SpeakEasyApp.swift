@@ -4,14 +4,8 @@ import SwiftUI
 struct SpeakEasyApp: App {
     @StateObject private var storageService = StorageService()
     @StateObject private var speechService = SpeechService()
+    @StateObject private var settingsManager = SettingsManager()
     @State private var textCorrectionService = TextCorrectionService()
-    @State private var settings = AppSettings.default
-
-    init() {
-        // Load settings on app launch
-        let service = StorageService()
-        _settings = State(initialValue: service.loadSettings())
-    }
 
     var body: some Scene {
         WindowGroup {
@@ -19,7 +13,7 @@ struct SpeakEasyApp: App {
                 storageService: storageService,
                 textCorrectionService: textCorrectionService,
                 speechService: speechService,
-                settings: settings
+                settingsManager: settingsManager
             )
         }
     }

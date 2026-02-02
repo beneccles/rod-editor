@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import AVFoundation
 
 /// User preferences and settings for the SpeakEasy app
 struct AppSettings: Codable {
@@ -13,11 +14,33 @@ struct AppSettings: Codable {
     var selectedVoiceId: String?
 
     /// Speech rate (0.5x - 2.0x)
-    var speechRate: Float = 1.0
+    /// Default of 0.9 provides a natural, conversational pace
+    /// (slightly slower than typical screen reader speed)
+    var speechRate: Float = 0.9
 
     /// Default settings
     static var `default`: AppSettings {
         AppSettings()
+    }
+}
+
+/// Observable manager for app settings
+@MainActor
+class SettingsManager: ObservableObject {
+    @Published var settings: AppSettings
+    private let storageService: StorageService
+
+    init() {
+        self.storageService = StorageService()
+        self.settings = storageService.loadSettings()
+    }
+
+    func saveSettings() {
+        storageService.saveSettings(settings)
+    }
+
+    func reloadSettings() {
+        settings = storageService.loadSettings()
     }
 }
 

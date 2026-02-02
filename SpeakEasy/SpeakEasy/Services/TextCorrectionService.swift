@@ -77,7 +77,7 @@ class TextCorrectionService {
             ]
         } catch {
             // If Foundation Models fails, fall back to enhanced mock
-            return try await generateMockVariations(text)
+            return try await generateMockVariations(for: text)
         }
     }
 

@@ -5,12 +5,14 @@ import AVFoundation
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel: SettingsViewModel
+    @ObservedObject var settingsManager: SettingsManager
 
-    init(storageService: StorageService, speechService: SpeechService, initialSettings: AppSettings) {
+    init(storageService: StorageService, speechService: SpeechService, settingsManager: SettingsManager) {
+        self.settingsManager = settingsManager
         self._viewModel = StateObject(wrappedValue: SettingsViewModel(
             storageService: storageService,
             speechService: speechService,
-            initialSettings: initialSettings
+            settingsManager: settingsManager
         ))
     }
 
@@ -25,18 +27,18 @@ struct SettingsView: View {
                             Text("20pt")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
-                            Slider(value: $viewModel.settings.fontSize, in: 20...40, step: 1)
+                            Slider(value: $settingsManager.settings.fontSize, in: 20...40, step: 1)
                             Text("40pt")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
-                        Text("\(Int(viewModel.settings.fontSize))pt")
+                        Text("\(Int(settingsManager.settings.fontSize))pt")
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }
                     .padding(.vertical, 8)
 
-                    Picker("Theme", selection: $viewModel.settings.colorScheme) {
+                    Picker("Theme", selection: $settingsManager.settings.colorScheme) {
                         ForEach(ColorSchemePreference.allCases, id: \.self) { scheme in
                             Text(scheme.rawValue).tag(scheme)
                         }
@@ -44,7 +46,7 @@ struct SettingsView: View {
                 }
 
                 Section("VOICE") {
-                    Picker("Voice", selection: $viewModel.settings.selectedVoiceId) {
+                    Picker("Voice", selection: $settingsManager.settings.selectedVoiceId) {
                         Text("Default").tag(String?.none)
                         ForEach(groupedVoices.keys.sorted(), id: \.self) { language in
                             Section(header: Text(language)) {
@@ -62,12 +64,12 @@ struct SettingsView: View {
                             Text("0.5x")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
-                            Slider(value: $viewModel.settings.speechRate, in: 0.5...2.0, step: 0.1)
+                            Slider(value: $settingsManager.settings.speechRate, in: 0.5...2.0, step: 0.1)
                             Text("2.0x")
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
-                        Text(String(format: "%.1fx", viewModel.settings.speechRate))
+                        Text(String(format: "%.1fx", settingsManager.settings.speechRate))
                             .font(.caption)
                             .foregroundColor(.secondary)
                     }

@@ -4,14 +4,14 @@ import AVFoundation
 /// ViewModel for the settings screen
 @MainActor
 class SettingsViewModel: ObservableObject {
-    @Published var settings: AppSettings
+    private let settingsManager: SettingsManager
     private let storageService: StorageService
     private let speechService: SpeechService
 
-    init(storageService: StorageService, speechService: SpeechService, initialSettings: AppSettings) {
+    init(storageService: StorageService, speechService: SpeechService, settingsManager: SettingsManager) {
         self.storageService = storageService
         self.speechService = speechService
-        self.settings = initialSettings
+        self.settingsManager = settingsManager
     }
 
     var availableVoices: [AVSpeechSynthesisVoice] {
@@ -19,15 +19,15 @@ class SettingsViewModel: ObservableObject {
     }
 
     func saveSettings() {
-        storageService.saveSettings(settings)
+        settingsManager.saveSettings()
     }
 
     func testVoice() {
         let testText = "Hello, this is how I will sound."
         speechService.speak(
             text: testText,
-            voiceId: settings.selectedVoiceId,
-            rate: settings.speechRate
+            voiceId: settingsManager.settings.selectedVoiceId,
+            rate: settingsManager.settings.speechRate
         )
     }
 
